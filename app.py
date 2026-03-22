@@ -180,10 +180,16 @@ if uploaded_files:
 
     col_slider, col_metric = st.columns([4, 1])
     with col_slider:
-        keep_pages = st.slider(
-            "保留頁數", min_value=1, max_value=max_pages,
-            value=min(20, max_pages), label_visibility="collapsed",
-        )
+        if max_pages == 1:
+            keep_pages = 1
+            st.info("上傳的 PDF 只有 1 頁，將保留完整內容。")
+        else:
+            keep_pages = st.slider(
+                "保留頁數（拖動調整）",
+                min_value=1,
+                max_value=max_pages,
+                value=min(20, max_pages),
+            )
     with col_metric:
         st.metric("保留前", f"{keep_pages} 頁")
 
